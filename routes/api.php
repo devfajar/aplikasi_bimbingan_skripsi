@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Dashboard\Dosen\DosenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,10 @@ use App\Http\Controllers\AuthController;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum', 'role:Super Admin']], function (){
+    Route::resource('dashboard', DosenController::class);
 });
+
+//Route::middleware('auth:sanctum', 'guard_access:web')->group(function () {
+//    Route::resource('dashboard', DosenController::class);
+//});
