@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Dashboard\Mahasiswa;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use App\Models\User;
-use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 
-class MhsController extends Controller
+class SkripsiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,24 +13,24 @@ class MhsController extends Controller
     public function index()
     {
         //
-        $user = User::orderBy('id')->paginate(5);
-
-        return UserResource::collection($user);
-    }
+    }     
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nim' => 'required|unique:mahasiswa|digits:10',
-            'angkatan' => 'required|digits:4',
-            'fakultas_id' => 'required|exists:fakultas,id',
-            'prodi_id' => 'required|exists:prodi,id'
+        //
+         $validated = $request->validate([
+             'mahasiswa_id' => 'required|exists:mahasiswa,id',
+            'dosen_pembimbing_id' => 'required|exists:dosen,id',
+            'judul' => 'required|string|max:255',
+            'status' => 'required|in:proses,disetujui,ditolak'
         ]);
 
-        $mahasiswa = Mahasiswa::create($validated);
+         $skripsi = Skripsi::create($validated);
+
+         return new SkripsiResource($skripsi);
     }
 
     /**

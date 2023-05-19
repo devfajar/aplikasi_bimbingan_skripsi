@@ -3,8 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Dashboard\Dosen\DosenController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,8 +17,14 @@ use App\Http\Controllers\Dashboard\Dosen\DosenController;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::group(['middleware' => ['auth:sanctum', 'role:Super Admin']], function (){
-    Route::resource('dashboard', DosenController::class);
+Route::group(['middleware' => ['auth:sanctum', 'role:Dosen']], function () {
+    Route::apiResource('dashboard_dsn', 'Dashboard\Dosen\DosenController' );
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'role:Mahasiswa']], function () {
+   Route::get('dashboard_mhs', 'Dashboard\Mahasiswa\MhsController@index' );
+   Route::post('pengajuan', 'Dashboard\Mahasiswa\MhsController@store');
+
 });
 
 //Route::middleware('auth:sanctum', 'guard_access:web')->group(function () {

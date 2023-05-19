@@ -4,9 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Spatie\Permission\Models\Role;
 
-class UserResource extends JsonResource
+class DosenResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +16,12 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'alamat' => $this->alamat,
-            'no_telepon' => $this->no_telepon
+            'user_id' => $this->user_id,
+            'nidn' => $this->nidn,
+            'fakultas_id' => $this->fakultas_id,
+            'prodi_id' => $this->prodi_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

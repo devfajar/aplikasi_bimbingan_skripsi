@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard\Dosen;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\Dosen;
+use App\Http\Resources\DosenResource;
 use Illuminate\Http\Request;
 
 class DosenController extends Controller
@@ -16,16 +18,8 @@ class DosenController extends Controller
     {
         //
         $user = User::orderBy('id', 'DESC')->paginate(5);
-        
-        return UserResource::collection($user);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return UserResource::collection($user);
     }
 
     /**
@@ -33,21 +27,22 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'nidn' => 'required|integer',
+            'fakultas_id' => 'required|exists:fakultas,id',
+            'prodi_id' => 'required|exists:prodi,id',
+        ]);
+
+        $dosen = Dosen::create($request->all());
+
+        return new DosenResource($dosen);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
     {
         //
     }
