@@ -20,7 +20,8 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'alamat' => $this->alamat,
-            'no_telepon' => $this->no_telepon
+            'no_telepon' => $this->no_telepon,
+            'mahasiswa' => $this->whenLoaded('')
         ];
     }
 }
