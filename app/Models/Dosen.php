@@ -11,6 +11,7 @@ class Dosen extends Model
 {
     use HasFactory;
 
+    protected $table = 'dosen';
     protected $guarded = [];
 
 
@@ -18,7 +19,5 @@ class Dosen extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    
 
 }

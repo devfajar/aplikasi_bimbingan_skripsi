@@ -21,7 +21,8 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'alamat' => $this->alamat,
             'no_telepon' => $this->no_telepon,
-            'mahasiswa' => $this->whenLoaded('')
+            'mahasiswa' => $this->whenLoaded('mahasiswa'),
+            'dosen' => $this->whenLoaded('dosen')
         ];
     }
 }
