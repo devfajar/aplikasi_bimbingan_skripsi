@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Dashboard\Dosen;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use App\Models\User;
-use App\Models\Dosen;
-use App\Http\Resources\DosenResource;
+use App\Http\Resources\SkripsiResource;
+use App\Models\Skripsi;
 use Illuminate\Http\Request;
 
 class DosenController extends Controller
@@ -16,10 +14,12 @@ class DosenController extends Controller
      */
     public function index()
     {
-        //
-        $user = User::orderBy('id', 'DESC')->paginate(5);
+        $data = Skripsi::where('dosen_pembimbing_id', auth()->user()->dosen->id)->get();
 
-        return UserResource::collection($user);
+        $data->load('mahasiswa.user', 'dosen.user');
+
+        return SkripsiResource::collection($data);
+
     }
 
     /**
@@ -27,16 +27,7 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'nidn' => 'required|integer',
-            'fakultas_id' => 'required|exists:fakultas,id',
-            'prodi_id' => 'required|exists:prodi,id',
-        ]);
 
-        $dosen = Dosen::create($request->all());
-
-        return new DosenResource($dosen);
     }
 
     /**

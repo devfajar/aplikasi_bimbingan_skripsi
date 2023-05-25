@@ -12,6 +12,7 @@ class Mahasiswa extends Model
 {
     use HasFactory, SoftDeletes;
     
+    protected $table = 'mahasiswa';
     protected $guarded = [];
     
     public function user(): BelongsTo

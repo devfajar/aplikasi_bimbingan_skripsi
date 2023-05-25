@@ -14,6 +14,16 @@ class MhsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user' => new UserResource($this->whenLoaded('user')),
+            'nim' => $this->nim,
+            'angkatan' => $this->angkatan,
+            'fakultas' => $this->fakultas_id,
+            'prodi' => $this->prodi_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'deleted_at' => $this->deleted_at
+        ];
     }
 }

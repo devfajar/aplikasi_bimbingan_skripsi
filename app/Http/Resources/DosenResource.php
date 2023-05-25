@@ -16,7 +16,7 @@ class DosenResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'user' => new UserResource($this->whenLoaded('user')),
             'nidn' => $this->nidn,
             'fakultas_id' => $this->fakultas_id,
             'prodi_id' => $this->prodi_id,

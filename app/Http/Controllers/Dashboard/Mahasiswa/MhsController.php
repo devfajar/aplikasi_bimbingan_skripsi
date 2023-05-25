@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Dashboard\Mahasiswa;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use App\Models\User;
-use App\Models\Mahasiswa;
+use App\Http\Resources\SkripsiResource;
+use App\Models\Skripsi;
 use Illuminate\Http\Request;
 
 class MhsController extends Controller
@@ -15,10 +14,7 @@ class MhsController extends Controller
      */
     public function index()
     {
-        //
-        $user = User::orderBy('id')->paginate(5);
-
-        return UserResource::collection($user);
+        
     }
 
     /**
@@ -26,14 +22,20 @@ class MhsController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nim' => 'required|unique:mahasiswa|digits:10',
-            'angkatan' => 'required|digits:4',
-            'fakultas_id' => 'required|exists:fakultas,id',
-            'prodi_id' => 'required|exists:prodi,id'
+        $request->validate([
+            'mahasiswa_id' => 'required|exists:mahasiswa,id',
+            'dosen_pembimbing_id' => 'required|exists:dosen,id',
+            'judul' => 'required|string',
         ]);
 
-        $mahasiswa = Mahasiswa::create($validated);
+        $pengajuanSkripsi = Skripsi::create([
+            'mahasiswa_id' => $request->input('mahasiswa_id'),
+            'dosen_pembimbing_id' => $request->input('dosen_pembimbing_id'),
+            'judul' => $request->input('judul'),
+            'status' => 'proses',
+        ]);
+
+        return new SkripsiResource($pengajuanSkripsi);
     }
 
     /**

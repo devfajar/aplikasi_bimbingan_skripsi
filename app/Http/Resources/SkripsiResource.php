@@ -16,8 +16,8 @@ class SkripsiResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'mahasiswa_id' => $this->mahasiswa_id,
-            'dosen_pembimbing_id' => $this->dosen_pembimbing_id,
+            'dosen_pembimbing_id' => new DosenResource($this->whenLoaded('dosen')),
+            'mahasiswa_id' => new MhsResource($this->whenLoaded('mahasiswa')),
             'judul' => $this->judul,
             'status' => $this->status,
             'created_at' => $this->created_at,

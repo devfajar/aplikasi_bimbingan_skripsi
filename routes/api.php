@@ -27,7 +27,6 @@ Route::group(['middleware' => ['auth:sanctum', 'role:Dosen']], function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'role:Mahasiswa']], function () {
-   Route::get('mahasiswa', 'Dashboard\Mahasiswa\MhsController@index');
    Route::post('pengajuan', 'Dashboard\Mahasiswa\MhsController@store');
 });
 

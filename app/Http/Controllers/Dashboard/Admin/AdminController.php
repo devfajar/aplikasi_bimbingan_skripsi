@@ -60,7 +60,7 @@ class AdminController extends Controller
     
             DB::commit();
 
-            $user->load('dosen', 'mahasiswa');
+            $user->load('dosen');
     
             return new UserResource($user);
         } catch (\Exception $e) {
@@ -117,6 +117,8 @@ class AdminController extends Controller
             $user->assignRole($role);
     
             DB::commit();
+
+            $user->load('mahasiswa');
     
             return new UserResource($user);
         } catch (\Exception $e) {
